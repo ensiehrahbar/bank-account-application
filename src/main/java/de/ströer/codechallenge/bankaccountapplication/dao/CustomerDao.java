@@ -12,9 +12,9 @@ public interface CustomerDao {
 
     public void saveOrUpdate(Customer customer);
 
-    public void delete(IBAN iban);
+    public void delete(int id);
 
-    public Customer get(IBAN iban);
+    public Customer get(int id);
 
     public List<Customer> list();
 }
