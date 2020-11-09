@@ -4,9 +4,11 @@ import javax.sql.DataSource;
 
 import de.ströer.codechallenge.bankaccountapplication.dao.CustomerDao;
 import de.ströer.codechallenge.bankaccountapplication.dao.CustomerDaoImpl;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -19,6 +21,7 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan(basePackages = "de.ströer.codechallenge.bankaccountapplication")
 @EnableWebMvc
+@PropertySource(value = "application.properties", ignoreResourceNotFound = true)
 public class CustomerConfig extends WebMvcConfigurerAdapter {
     @Bean
     public ViewResolver getViewResolver(){
@@ -33,6 +36,14 @@ public class CustomerConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
+    @Value("${spring.datasource.url}")
+    private String jdbcURL;
+
+    @Value("${spring.datasource.username}")
+    private String usename;
+
+    @Value("${spring.datasource.password}")
+    private String pass;
     @Bean
     public DataSource getDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
